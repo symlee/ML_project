@@ -9,7 +9,7 @@
 
 % define data path
 tempdir = pwd;
-rootFolder = fullfile(tempdir, 'data/1/train');
+rootFolder = fullfile(tempdir, 'data/1/train/processed');
 %% Load Images
 % Instead of operating on all of Caltech 101, which is time consuming, use
 % three of the categories: airplanes, ferry, and laptop. The image category
@@ -95,11 +95,11 @@ rng(1) % For reproducibility
 
 %% Define the Network Layers
 % Define the convolutional neural network architecture. 
-layers = [imageInputLayer([585 210 1])
+layers = [imageInputLayer([470 230 1])
           convolution2dLayer(5,20)
           reluLayer
           maxPooling2dLayer(2,'Stride',2)
-          fullyConnectedLayer(10)
+          fullyConnectedLayer(2)
           softmaxLayer
           classificationLayer()];  
 
@@ -179,7 +179,7 @@ layers = [imageInputLayer([585 210 1])
 % is a full training cycle on the whole training data), and start the
 % training with an initial learning rate of 0.0001.
 options = trainingOptions('sgdm','MaxEpochs',15, ...
-	'InitialLearnRate',0.0001);  
+	'InitialLearnRate',0.01,'ExecutionEnvironment','cpu');  
 
 %% Train the Network Using Training Data
 % Train the network you defined in layers, using the training data and the
@@ -213,7 +213,7 @@ convnet = trainNetwork(trainDigitData,layers,options);
 %% Classify the Images in the Test Data and Compute Accuracy
 % Run the trained network on the test set that was not used to train the
 % network and predict the image labels (digits).
-YTest = classify(convnet,testDigitData);
+YTest = classify(convnet,testDigitData,'ExecutionEnvironment','cpu');
 TTest = testDigitData.Labels;
 
 %% 
