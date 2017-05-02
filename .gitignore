@@ -45,3 +45,14 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+caltech101/*
+data/*
+GPUBench_v1.9/*
+mNeuron-master/*
+proj6/*
+temp/*
+visualizations/*
+*~
+imagenet-caffe-alex.mat
