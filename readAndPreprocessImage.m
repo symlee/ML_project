@@ -15,11 +15,13 @@
         if ismatrix(I)
             I = cat(3,I,I,I);
         end
+
 %         figure
 %         imshow(I)
         
         % Resize the image as required for the CNN. 
         Iout = imresize(I, [227 227]);
+%         Iout = imresize(I, [585 210]); % average size of footprint images
         
         % Note that the aspect ratio is not preserved. In Caltech 101, the
         % object of interest is centered in the image and occupies a

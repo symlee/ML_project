@@ -56,3 +56,4 @@ temp/*
 visualizations/*
 *~
 imagenet-caffe-alex.mat
+*.asv
