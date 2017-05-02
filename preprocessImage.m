@@ -11,9 +11,7 @@ function im_rotated = preprocessImage(im)
 % obtain mask over track (use median filter as not to blur edges too much)
 im_bin = (medfilt2(im, [5 5]) < 255);
 % further preprocessing to get clean mask if necessary
-im_bin = (medfilt2(im_bin, [10 10]));  % get rid of speckles inside the
-% tracks - but this actually causes right\2861.png to be unnecessarily
-% rotated
+im_bin = (medfilt2(im_bin, [10 10]));  % get rid of corner outliers
 % m_bin = bwareaopen(im_bin, 10); % get rid of speckles around the border of the image
 
 % remove pixels outside of footprint track (white border is unnecessary)
@@ -27,22 +25,34 @@ CC = bwconncomp(BW);
 numPixels = cellfun(@numel,CC.PixelIdxList);
 [largestComponent,idx] = max(numPixels);
 
-if largestComponent < 30
+% if largestComponent < 30  % I think I needed this last time but it fails
+% on right/2861.png
+if isempty(idx)
     % im is already correctly oriented
     im_rotated = im;
     
     % return cropped image
     mask = im_bin;
     [rowMask, colMask] = ind2sub(size(mask), find(mask == 1));
-    minRowIndMask = find(rowMask == min(rowMask));
-    maxRowIndMask = find(rowMask == max(rowMask));
-    minColIndMask = find(colMask == min(colMask));
-    maxColIndMask = find(colMask == max(colMask));
     
-    minRow = rowMask(minRowIndMask(1));
-    maxRow = rowMask(maxRowIndMask(1));
-    minCol = colMask(minColIndMask(1));
-    maxCol = colMask(maxColIndMask(1));
+    minRow = min(rowMask);
+    maxRow = max(rowMask);
+    minCol = min(colMask);
+    maxCol = max(colMask);
+    
+    im_rotated = im_rotated(minRow:maxRow, minCol:maxCol);
+elseif largestComponent < 30
+    % im is already correctly oriented
+    im_rotated = im;
+    
+    % return cropped image
+    mask = im_bin;
+    [rowMask, colMask] = ind2sub(size(mask), find(mask == 1));
+    
+    minRow = min(rowMask);
+    maxRow = max(rowMask);
+    minCol = min(colMask);
+    maxCol = max(colMask);
     
     im_rotated = im_rotated(minRow:maxRow, minCol:maxCol);
 else
@@ -53,7 +63,7 @@ else
 
     ptLeft = [row(minColInd(1)) col(minColInd(1))];
     ptRight = [row(maxColInd(1)) col(maxColInd(1))];
-    BW(CC.PixelIdxList{idx}) = 0;  % remove longest edge for visual verification
+%     BW(CC.PixelIdxList{idx}) = 0;  % remove longest edge for visual verification
 
     % rotate image according to rotation of longest edge
     rad = atan2((ptRight(1) - ptLeft(1)), (ptRight(2) - ptLeft(2))) + pi/2;
@@ -62,22 +72,13 @@ else
     % return cropped, rotated image
     mask = imrotate(im_bin, rad2deg(rad));
     [rowMask, colMask] = ind2sub(size(mask), find(mask == 1));
-    minRowIndMask = find(rowMask == min(rowMask));
-    maxRowIndMask = find(rowMask == max(rowMask));
-    minColIndMask = find(colMask == min(colMask));
-    maxColIndMask = find(colMask == max(colMask));
-    
-    minRow = rowMask(minRowIndMask(1));
-    maxRow = rowMask(maxRowIndMask(1));
-    minCol = colMask(minColIndMask(1));
-    maxCol = colMask(maxColIndMask(1));
+
+    minRow = min(rowMask);
+    maxRow = max(rowMask);
+    minCol = min(colMask);
+    maxCol = max(colMask);
     
     im_rotated = im_rotated(minRow:maxRow, minCol:maxCol);
-
-%     stats = regionprops(mask, 'FilledImage');
-%     cropped_mask = stats.FilledImage;
-%     imshow(b)
-%     imshow(im_rotated)
 end
 
 % % Debugging code
@@ -93,8 +94,6 @@ end
 % imshow(BW)
 % 
 % a = 2
-
-
 
 %{
 figure
