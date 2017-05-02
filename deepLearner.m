@@ -60,10 +60,10 @@ tbl = countEachLabel(imds)
 % let's first adjust it, so that the number of images in the training set
 % is balanced.
 
-%minSetCount = min(tbl{:,2}); % determine the smallest amount of images in a category
+minSetCount = min(tbl{:,2}); % determine the smallest amount of images in a category
 
 % work with a smaller subset of data for now just to prototype faster
-minSetCount = 500; % determine the smallest amount of images in a category
+% minSetCount = 500; % determine the smallest amount of images in a category
 
 % Use splitEachLabel method to trim the set.
 imds = splitEachLabel(imds, minSetCount, 'randomize');
@@ -133,6 +133,8 @@ convnet.Layers(1)
 % classification layer has 1000 classes from the ImageNet dataset. 
 
 % Inspect the last layer
+% last layer has 1000-way output but it shouldn't matter since I won't
+% be using it (only need features at fc7)
 convnet.Layers(end)
 
 % Number of class names for ImageNet classification task

@@ -4,15 +4,22 @@
     function Iout = readAndPreprocessImage(filename)
                 
         I = imread(filename);
+%         figure
+%         imshow(I)
+        
+        % rotate the image to get rid of arbitrary rotation
+        I = preprocessImage(I);
         
         % Some images may be grayscale. Replicate the image 3 times to
         % create an RGB image. 
         if ismatrix(I)
             I = cat(3,I,I,I);
         end
+%         figure
+%         imshow(I)
         
         % Resize the image as required for the CNN. 
-        Iout = imresize(I, [227 227]);  
+        Iout = imresize(I, [227 227]);
         
         % Note that the aspect ratio is not preserved. In Caltech 101, the
         % object of interest is centered in the image and occupies a
