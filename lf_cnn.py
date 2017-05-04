@@ -20,7 +20,9 @@ import numpy as np
 batch_size = 128
 num_classes = 2
 epochs = 12
+
 train_val_ratio = 0.5
+n = 3   # number of images per chunk
 
 # convert to base path and str cat
 num_images_total = 10  # total number of images (including left and right)
@@ -88,11 +90,17 @@ model.compile(loss=keras.losses.binary_crossentropy,
               optimizer=keras.optimizers.Adagrad(),
               metrics=['accuracy'])
 
-model.fit(x_train, y_train,
-          batch_size=batch_size,
-          epochs=epochs,
-          verbose=1,
-          validation_data=(x_test, y_test))
+model.summary()
+import sys
+#sys.exit(1)
+
+# chunks for
+x_train_chunks = [x_train[i:i+n] for i in xrange(0, len(x_train), n)]
+y_train_chunks = [y_train[i:i+n] for i in xrange(0, len(y_train), n)]
+
+for ind in xrange(0, len(x_train_chunks)):
+    model.fit(x_train_chunks[ind], y_train_chunks[ind], batch_size=batch_size, epochs=epochs, verbose=1, validation_data=(x_test, y_test))
+
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
