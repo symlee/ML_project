@@ -22,23 +22,23 @@ num_classes = 2
 epochs = 12
 
 train_val_ratio = 0.5
-n = 3   # number of images per chunk
+n = 100   # number of images per chunk (current works at around 100, crashes at 200)
 
 # convert to base path and str cat
-num_images_total = 10  # total number of images (including left and right)
+num_images_total = 5000  # total number of images (including left and right)
 num_images_ind = num_images_total/2
-base_path = './data/1/train/processed_large/'
+base_path = './data/1/train/processed_small/'
 
 # input image dimensions
 #img_rows, img_cols = 28, 28
-img_rows, img_cols = 470, 230
+img_rows, img_cols = 235, 115
 
 x = np.zeros((num_images_total, img_rows, img_cols, 1))
 y = np.zeros((num_images_total, img_rows, img_cols, 1))
 
 for ind in range(1, num_images_ind + 1):
     x[ind - 1, :, :, 0] = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
-    x[ind + num_images_ind - 1, :, :, 0] = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
+    x[ind + num_images_ind - 1, :, :, 0] = cv2.imread(base_path + 'right/' + str(ind) + '.png', 0)
 
 y = np.concatenate((np.zeros(num_images_ind), np.ones(num_images_ind)))
 
