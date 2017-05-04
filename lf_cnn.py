@@ -23,10 +23,9 @@ epochs = 12
 train_val_ratio = 0.5
 
 # convert to base path and str cat
-#num_images = 10000  # total number of images
-num_images_total = 8  # total number of images (including left and right)
+num_images_total = 10  # total number of images (including left and right)
 num_images_ind = num_images_total/2
-base_path = './data/1/train/testing/'
+base_path = './data/1/train/processed_large/'
 
 # input image dimensions
 #img_rows, img_cols = 28, 28
@@ -36,18 +35,12 @@ x = np.zeros((num_images_total, img_rows, img_cols, 1))
 y = np.zeros((num_images_total, img_rows, img_cols, 1))
 
 for ind in range(1, num_images_ind + 1):
-    img_left = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
-    img_right = cv2.imread(base_path + 'right/' + str(ind) + '.png', 0)
-    x[ind - 1, :, :, 0] = img_left
-    x[ind + num_images_ind - 1, :, :, 0] = img_right
+    x[ind - 1, :, :, 0] = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
+    x[ind + num_images_ind - 1, :, :, 0] = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
 
-y = np.concatenate((np.ones(num_images_ind), np.ones(num_images_ind)*2))
+y = np.concatenate((np.zeros(num_images_ind), np.ones(num_images_ind)))
 
-# the data, shuffled and split between train and test sets
-#(x_train, y_train), (x_test, y_test) = mnist.load_data()
-
-# make train and test datasets through random permutation (verified with 4 images)
-assert len(x) == len(y)
+# make train and validation datasets through random permutation (verified with 4 images)
 p = np.random.permutation(len(y))
 x = x[p]
 y = y[p]
@@ -57,8 +50,6 @@ x_train = x[0:train_val_split]
 y_train = y[0:train_val_split]
 x_test = x[train_val_split:]
 y_test = y[train_val_split:]
-
-#im = cv2.imread('./data/1/train/processed_small/left/1.png', 0)
 
 if K.image_data_format() == 'channels_first':
     x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
@@ -93,8 +84,8 @@ model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
-model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.Adadelta(),
+model.compile(loss=keras.losses.binary_crossentropy,
+              optimizer=keras.optimizers.Adagrad(),
               metrics=['accuracy'])
 
 model.fit(x_train, y_train,
