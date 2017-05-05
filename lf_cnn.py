@@ -11,22 +11,24 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from keras.applications.vgg16 import VGG16
+from keras.models import load_model
+from keras.callbacks import EarlyStopping
 
 from os import listdir
 import cv2
 import numpy as np
 
 # parameters
-batch_size = 8
+batch_size = 32
 num_classes = 2
 epochs = 12
+train_val_ratio = 0.5 # percentage used for training
 
-train_val_ratio = 1 # percentage used for training
-n = 30   # number of images per chunk (current works at around 100, crashes at 200)
 
 # convert to base path and str cat
 num_images_total = 10000  # total number of images (including left and right)
 num_images_ind = num_images_total/2
+#base_path = '../data/1/train/processed_large/'
 base_path = '../data/1/train/processed_small/'
 
 # input image dimensions
@@ -37,17 +39,17 @@ input_shape = (img_rows, img_cols, 1)
 x = np.zeros((num_images_total, img_rows, img_cols, 1))
 y = np.zeros((num_images_total, img_rows, img_cols, 1))
 
-x_av = np.zeros((img_rows, img_cols, 1))
+#x_av = np.zeros((img_rows, img_cols, 1))
 for ind in range(1, num_images_ind + 1):
-    img_left = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
     img_right = cv2.imread(base_path + 'right/' + str(ind) + '.png', 0)
-    #print(img_left)
+    img_left = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
     #print(img_right)
-    x[ind - 1, :, :, 0] = img_left
-    x[ind + num_images_ind - 1, :, :, 0] = img_right
-    x_av = x_av + x[ind-1] + x[ind+num_images_ind-1]
+    #print(img_left)
+    x[ind - 1, :, :, 0] = img_right
+    x[ind + num_images_ind - 1, :, :, 0] = img_left
+    #x_av = x_av + x[ind-1] + x[ind+num_images_ind-1]
 
-print("x_Av max = " + str(x_av.max()/num_images_total))
+#print("x_Av max = " + str(x_av.max()/num_images_total))
 y = np.concatenate((np.zeros(num_images_ind), np.ones(num_images_ind)))
 
 # make train and validation datasets through random permutation (verified with 4 images)
@@ -82,7 +84,7 @@ model.add(Conv2D(32, kernel_size=(3, 3),
                  input_shape=input_shape))
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(Dropout(0.25))
 model.add(Flatten())
@@ -116,13 +118,26 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 
 
-
 model.summary()
 import sys
 #sys.exit(1)
 
+early_stopping = EarlyStopping(monitor='val_loss', patience=2)
+model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
+model.save('v2.h5')
+
+
+score = model.evaluate(x_test, y_test, verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
+
+
+
+
+
 '''
 # chunks for
+#n = 30   # number of images per chunk (current works at around 100, crashes at 200)
 x_train_chunks = [x_train[i:i+n] for i in xrange(0, len(x_train), n)]
 y_train_chunks = [y_train[i:i+n] for i in xrange(0, len(y_train), n)]
 
@@ -131,8 +146,3 @@ for epoch in xrange(0, 12):
     for ind in xrange(0, len(x_train_chunks)):
         model.fit(x_train_chunks[ind], y_train_chunks[ind], batch_size=len(x_train_chunks[ind]), epochs=1, verbose=1, validation_data=(x_test, y_test))
 '''
-model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1)
-
-score = model.evaluate(x_test, y_test, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])

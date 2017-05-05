@@ -58,3 +58,4 @@ visualizations/*
 imagenet-caffe-alex.mat
 *.asv
 .idea*
+*.h5
