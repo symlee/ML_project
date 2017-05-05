@@ -17,7 +17,7 @@ import cv2
 import numpy as np
 
 # parameters
-batch_size = 32
+batch_size = 8
 num_classes = 2
 epochs = 12
 
@@ -32,10 +32,12 @@ base_path = '../data/1/train/processed_small/'
 # input image dimensions
 #img_rows, img_cols = 470, 230
 img_rows, img_cols = 235, 115
+input_shape = (img_rows, img_cols, 1)
 
 x = np.zeros((num_images_total, img_rows, img_cols, 1))
 y = np.zeros((num_images_total, img_rows, img_cols, 1))
 
+x_av = np.zeros((img_rows, img_cols, 1))
 for ind in range(1, num_images_ind + 1):
     img_left = cv2.imread(base_path + 'left/' + str(ind) + '.png', 0)
     img_right = cv2.imread(base_path + 'right/' + str(ind) + '.png', 0)
@@ -43,7 +45,9 @@ for ind in range(1, num_images_ind + 1):
     #print(img_right)
     x[ind - 1, :, :, 0] = img_left
     x[ind + num_images_ind - 1, :, :, 0] = img_right
+    x_av = x_av + x[ind-1] + x[ind+num_images_ind-1]
 
+print("x_Av max = " + str(x_av.max()/num_images_total))
 y = np.concatenate((np.zeros(num_images_ind), np.ones(num_images_ind)))
 
 # make train and validation datasets through random permutation (verified with 4 images)
@@ -57,23 +61,14 @@ y_train = y[0:train_val_split]
 x_test = x[train_val_split:]
 y_test = y[train_val_split:]
 
-if K.image_data_format() == 'channels_first':
-    x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
-    x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
-    input_shape = (1, img_rows, img_cols)
-else:
-    x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
-    x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
-    input_shape = (img_rows, img_cols, 1)
-
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
 x_train /= 255
 x_test /= 255
 print('x_train shape:', x_train.shape)
-print(x_train.shape[0], 'train samples')
+print(x_train.shape, 'train samples')
 print(x_test.shape[0], 'test samples')
-print(x_train)
+#print(x_train)
 
 # convert class vectors to binary class matrices
 y_train = keras.utils.to_categorical(y_train, num_classes)
@@ -91,7 +86,7 @@ model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(Dropout(0.25))
 model.add(Flatten())
-model.add(Dense(256, activation='relu'))
+model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
@@ -117,7 +112,7 @@ model.add(Dense(num_classes, activation='sigmoid'))
 #model = VGG16
 
 model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=keras.optimizers.Adagrad(),
+              optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
 
 
