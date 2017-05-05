@@ -17,7 +17,7 @@ import cv2
 import numpy as np
 
 # parameters
-batch_size = 64
+batch_size = 32
 num_classes = 2
 epochs = 12
 
@@ -136,7 +136,7 @@ for epoch in xrange(0, 12):
     for ind in xrange(0, len(x_train_chunks)):
         model.fit(x_train_chunks[ind], y_train_chunks[ind], batch_size=len(x_train_chunks[ind]), epochs=1, verbose=1, validation_data=(x_test, y_test))
 '''
-model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1)
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
