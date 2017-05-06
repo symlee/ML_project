@@ -59,3 +59,4 @@ imagenet-caffe-alex.mat
 *.asv
 .idea*
 *.h5
+preview/*

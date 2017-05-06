@@ -16,44 +16,42 @@ from matplotlib import pyplot as plt
 import glob
 from PIL import Image
 from resizeimage import resizeimage
+import time
 
 datagen = ImageDataGenerator(
-        rotation_range=180,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        rescale=1./255,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=False,
-        fill_mode='nearest')
-
-'''
-datagen = ImageDataGenerator(
-        rotation_range=0,
+        rotation_range=360,
         width_shift_range=0,
         height_shift_range=0,
         rescale=1./255,
         shear_range=0,
         zoom_range=0,
-        horizontal_flip=False,
+        horizontal_flip=True,
+        vertical_flip=False,
         fill_mode='nearest')
-'''
 
-base_path = '../data/2/train/'
+
+base_path = '../data/2/train_processed_small/'
 save_path = '../data/2/train_processed_small/'
 # input image dimensions
-#img_rows, img_cols = 470, 230
-#img_rows, img_cols = 235, 115
-avg_rows, avg_cols = 300, 110
+img_rows, img_cols = 300, 110
 #input_shape = (img_rows, img_cols, 1)
+num_aug = 20 # number of augmented pictures to create (go for 100)
+'''
+20 and 100 is breaking, 200 10 as well
+2 1000 works
+1000 2 takes a serious hit
+'''
+num_categories = 100 # number of unique foot prints
 
+'''
+# for resizing images and determining average image dimensions
 cumuSz = np.array([[0, 0]])
 counter = 0
 for img_path in glob.glob("../data/2/train/*.png"):
     # for resizing images
     counter += 1
     img = Image.open(img_path)
-    img_resized = img.resize((avg_cols, avg_rows), Image.ANTIALIAS)
+    img_resized = img.resize((img_cols, img_rows), Image.ANTIALIAS)
     img_resized.save(save_path + str(counter) + '.png')
 
     # for determining average image dimensions
@@ -64,20 +62,42 @@ for img_path in glob.glob("../data/2/train/*.png"):
 #avgSz = cumuSz / float(counter)
 #print(avgSz)
 '''
+
 ind = 1
-ind = str(ind).zfill(5)
-img_right = cv2.imread(base_path + str(ind) + '.png', 0)
-#plt.imshow(img_right, cmap='gray', interpolation='bicubic')
-#plt.show()
-x = np.reshape(img_right, (1, img_rows, img_cols, 1)) # samples, cols, rows, channels
+#ind = str(ind).zfill(5)
 
 # the .flow() command below generates batches of randomly transformed images
 # and saves the results to the `preview/` directory
+for ind in xrange(1, num_categories + 1):
+    print('ind is: ' + str(ind))
+    img = cv2.imread(base_path + str(ind) + '.png', 0)
+    #time.sleep(0.001)
+    x = np.reshape(img, (1, img_rows, img_cols, 1))  # samples, cols, rows, channels
+    i = 0
+    for batch in datagen.flow(x, batch_size=1, save_to_dir='preview', save_prefix=str(ind), save_format='png'):
+        i += 1
+        #time.sleep(0.01)
+        #print('i is:' + str(i))
+        if i >= num_aug:
+            #time.sleep(0.1)
+            break  # otherwise the generator would loop indefinitely
+
+# definitely screwing up in the datagen.flow since I increased the number of generated images for each and it screws up
+
+'''
+x = [num_categories, img_rows, img_cols, 1]
+
+for ind in xrange(1, num_categories + 1):
+    print('ind is: ' + str(ind))
+    img = cv2.imread(base_path + str(ind) + '.png', 0)
+    x_sample = np.reshape(img, (1, img_rows, img_cols, 1))  # samples, cols, rows, channels
+    x[ind - 1, :, :, :] = x_sample
+
 i = 0
-for batch in datagen.flow(x, batch_size=1,
-                          save_to_dir='preview', save_prefix=str(ind), save_format='png'):
+for batch in datagen.flow(x, batch_size=num_categories, save_to_dir='preview', save_prefix=str(ind), save_format='png'):
     i += 1
-    if i > 20:
+    # print('i is:' + str(i))
+    if i >= num_aug:
         break  # otherwise the generator would loop indefinitely
 
 '''
