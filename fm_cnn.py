@@ -13,6 +13,9 @@ from os import listdir
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+import glob
+from PIL import Image
+from resizeimage import resizeimage
 
 datagen = ImageDataGenerator(
         rotation_range=180,
@@ -37,12 +40,30 @@ datagen = ImageDataGenerator(
 '''
 
 base_path = '../data/2/train/'
-
+save_path = '../data/2/train_processed_small/'
 # input image dimensions
 #img_rows, img_cols = 470, 230
-img_rows, img_cols = 235, 115
-input_shape = (img_rows, img_cols, 1)
+#img_rows, img_cols = 235, 115
+avg_rows, avg_cols = 300, 110
+#input_shape = (img_rows, img_cols, 1)
 
+cumuSz = np.array([[0, 0]])
+counter = 0
+for img_path in glob.glob("../data/2/train/*.png"):
+    # for resizing images
+    counter += 1
+    img = Image.open(img_path)
+    img_resized = img.resize((avg_cols, avg_rows), Image.ANTIALIAS)
+    img_resized.save(save_path + str(counter) + '.png')
+
+    # for determining average image dimensions
+    #sz = np.shape(img)
+    #cumuSz += sz
+    #counter += 1
+
+#avgSz = cumuSz / float(counter)
+#print(avgSz)
+'''
 ind = 1
 ind = str(ind).zfill(5)
 img_right = cv2.imread(base_path + str(ind) + '.png', 0)
@@ -59,3 +80,4 @@ for batch in datagen.flow(x, batch_size=1,
     if i > 20:
         break  # otherwise the generator would loop indefinitely
 
+'''
