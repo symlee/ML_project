@@ -19,11 +19,18 @@
 % profile on
 
 % define data path
+cd ..
 tempdir = pwd;
-rootFolder = fullfile(tempdir, 'data/1/train');
-categories = {'left', 'right'};
+cd ML_project
+rootFolder = fullfile(tempdir, 'data/1/valid');
 
-imds = imageDatastore(fullfile(rootFolder, categories), 'LabelSource', 'foldernames');
+% % for the left and right images
+% categories = {'left', 'right'};
+% imds = imageDatastore(fullfile(rootFolder, categories), 'LabelSource', 'foldernames');
+
+% for validation data
+imds = imageDatastore(rootFolder, 'LabelSource', 'foldernames');
+
 [numImages, ~] = size(imds.Files);
 % numImages = 200;
 tic
@@ -35,7 +42,8 @@ for j = 1:numImages
     im = imread(img_path);
     im_rotated = preprocessImage(im);
     im_rotated = imresize(im_rotated, [235 115]);  % resize image
-    save_path = strrep(img_path, '/train/', '/train/processed_small/');
+    % save_path = strrep(img_path, '/train/', '/train/processed_small/');
+    save_path = strrep(img_path, '/valid/', '/valid_processed_small/');
     
     imwrite(im_rotated, save_path);
 end
