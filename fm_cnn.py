@@ -87,7 +87,7 @@ import sys
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
-model.save('v1_fm.h5')
+model.save('v2_fm.h5')
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])

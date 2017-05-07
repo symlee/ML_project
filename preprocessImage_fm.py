@@ -32,24 +32,24 @@ datagen = ImageDataGenerator(
         fill_mode='nearest')
 
 
-base_path = '../data/2/train_processed_small2/'
-save_path = '../data/2/train_processed_small2/'
+base_path = '../data/2/valid_processed_small2/'
 # input image dimensions
 img_rows, img_cols = 390, 140
 #img_rows, img_cols = 300, 110
 num_aug = 20            # number of augmented pictures to create (go for 100)
-num_categories = 1000   # number of unique foot prints
+num_categories = 10000   # number of unique foot prints
 
 '''
 # for resizing images and determining average image dimensions
 cumuSz = np.array([[0, 0]])
 counter = 0
-for img_path in glob.glob("../data/2/train/*.png"):
+for img_path in glob.glob("../data/2/valid/*.png"):
     # for resizing images
     counter += 1
+    print(counter)
     img = Image.open(img_path)
     img_resized = img.resize((img_cols, img_rows), Image.ANTIALIAS)
-    img_resized.save(save_path + str(counter) + '.png')
+    img_resized.save(base_path + str(counter) + '.png')
 
     # for determining average image dimensions
     #sz = np.shape(img)
