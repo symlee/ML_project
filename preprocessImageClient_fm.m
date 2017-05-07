@@ -47,6 +47,7 @@ for j = 1:numImages
     denoisedImage = wiener2(im, [filter_row, filter_col]);
     denoisedImage(denoisedImage > threshold) = 255;
     denoisedImage(denoisedImage <= threshold) = 0;
+    denoisedImage = imresize(denoisedImage, [390 140]);
     %save_path = strrep(img_path, '/train/', '/train_bin/');
     save_path = strrep(img_path, '/valid/', '/valid_bin/');
     
