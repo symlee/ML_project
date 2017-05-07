@@ -1,12 +1,13 @@
 from __future__ import print_function
 import keras
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten
+from keras.layers import Dense, Dropout, Flatten, GlobalAveragePooling2D
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from keras.applications.vgg16 import VGG16
 from keras.models import load_model
 from keras.callbacks import EarlyStopping
+from keras.models import Model
 
 from os import listdir
 import cv2
@@ -63,8 +64,18 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # include_top needs to be false to be able to specify input_shape
-model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
 
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+x = Dense(1024, activation='relu')(x)
+# and a logistic layer -- let's say we have 200 classes
+predictions = Dense(num_classes, activation='softmax')(x)
+
+model = Model(inputs=base_model.input, outputs=predictions)
+'''
+model.add(Dense(num_classes, activation='softmax'))
+'''
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
@@ -78,5 +89,8 @@ early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
 model.save('v1_fm.h5')
 
+score = model.evaluate(x_test, y_test, verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
 
 
