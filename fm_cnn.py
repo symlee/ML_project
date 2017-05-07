@@ -35,13 +35,8 @@ save_path = '../data/2/train_processed_small/'
 # input image dimensions
 img_rows, img_cols = 300, 110
 #input_shape = (img_rows, img_cols, 1)
-num_aug = 20 # number of augmented pictures to create (go for 100)
-'''
-20 and 100 is breaking, 200 10 as well
-2 1000 works
-1000 2 takes a serious hit
-'''
-num_categories = 100 # number of unique foot prints
+num_aug = 20            # number of augmented pictures to create (go for 100)
+num_categories = 1000   # number of unique foot prints
 
 '''
 # for resizing images and determining average image dimensions
@@ -69,35 +64,14 @@ ind = 1
 # the .flow() command below generates batches of randomly transformed images
 # and saves the results to the `preview/` directory
 for ind in xrange(1, num_categories + 1):
+#for ind in xrange(1, 501):
     print('ind is: ' + str(ind))
     img = cv2.imread(base_path + str(ind) + '.png', 0)
-    #time.sleep(0.001)
     x = np.reshape(img, (1, img_rows, img_cols, 1))  # samples, cols, rows, channels
     i = 0
     for batch in datagen.flow(x, batch_size=1, save_to_dir='preview', save_prefix=str(ind), save_format='png'):
         i += 1
-        #time.sleep(0.01)
-        #print('i is:' + str(i))
         if i >= num_aug:
-            #time.sleep(0.1)
             break  # otherwise the generator would loop indefinitely
 
-# definitely screwing up in the datagen.flow since I increased the number of generated images for each and it screws up
-
-'''
-x = [num_categories, img_rows, img_cols, 1]
-
-for ind in xrange(1, num_categories + 1):
-    print('ind is: ' + str(ind))
-    img = cv2.imread(base_path + str(ind) + '.png', 0)
-    x_sample = np.reshape(img, (1, img_rows, img_cols, 1))  # samples, cols, rows, channels
-    x[ind - 1, :, :, :] = x_sample
-
-i = 0
-for batch in datagen.flow(x, batch_size=num_categories, save_to_dir='preview', save_prefix=str(ind), save_format='png'):
-    i += 1
-    # print('i is:' + str(i))
-    if i >= num_aug:
-        break  # otherwise the generator would loop indefinitely
-
-'''
+            # testing memory
