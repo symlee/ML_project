@@ -15,12 +15,12 @@ import numpy as np
 import glob
 
 # parameters
-batch_size = 32
+batch_size = 50
 num_classes = 1000
 epochs = 12
 train_val_ratio = 0.7 # percentage used for training
 
-num_images_orig = 10
+num_images_orig = 1000
 num_images_aug = num_images_orig * 20
 base_path = '../data/2/train_processed_small_aug2/'
 
@@ -34,8 +34,10 @@ y = np.zeros(num_images_aug)
 for orig_ind in range(1, num_images_orig + 1):
     aug_list = glob.glob(base_path + str(orig_ind) + '_*')
     for aug_ind in range(0, len(aug_list)):
-        x[(orig_ind - 1) * 20 + aug_ind, :, :, :] = cv2.imread(aug_list[aug_ind], 1)
-        y[(orig_ind - 1) * 20 + aug_ind] = orig_ind
+        img = cv2.imread(aug_list[aug_ind], 1)
+        #print(img)
+        x[(orig_ind - 1) * 20 + aug_ind, :, :, :] = img
+        y[(orig_ind - 1) * 20 + aug_ind] = orig_ind - 1
 
 
 
@@ -73,9 +75,7 @@ x = Dense(1024, activation='relu')(x)
 predictions = Dense(num_classes, activation='softmax')(x)
 
 model = Model(inputs=base_model.input, outputs=predictions)
-'''
-model.add(Dense(num_classes, activation='softmax'))
-'''
+
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
