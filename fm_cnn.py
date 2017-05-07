@@ -20,32 +20,33 @@ num_classes = 1000
 epochs = 12
 train_val_ratio = 0.7 # percentage used for training
 
-num_images_orig = 10   # TODO - put this back at 1000
+num_images_orig = 5   # TODO - put this back at 1000
 num_aug = 20
 num_images_aug = num_images_orig * num_aug
+num_chan = 1
 base_path = '../data/2/train_processed_small_aug2/'
 
 img_rows, img_cols = 390, 140
-input_shape = (img_rows, img_cols, 3)
+input_shape = (img_rows, img_cols, num_chan)
 
 train_val_split_dataset = int(np.ceil(train_val_ratio * num_images_aug))
 train_val_split_class = int(train_val_ratio * num_aug)
 
-x_train = np.zeros((train_val_split_dataset, img_rows, img_cols, 3))
+x_train = np.zeros((train_val_split_dataset, img_rows, img_cols, num_chan))
 y_train = np.zeros(train_val_split_dataset)
-x_test = np.zeros((num_images_aug - train_val_split_dataset, img_rows, img_cols, 3))
+x_test = np.zeros((num_images_aug - train_val_split_dataset, img_rows, img_cols, num_chan))
 y_test = np.zeros(num_images_aug - train_val_split_dataset)
 
 for orig_ind in range(1, num_images_orig + 1):
     aug_list = glob.glob(base_path + str(orig_ind) + '_*')
     for aug_ind in range(0, len(aug_list)):
-        img = cv2.imread(aug_list[aug_ind], 1)
+        img = cv2.imread(aug_list[aug_ind], 0)
         #print(img)
         if aug_ind < train_val_split_class:
-            x_train[(orig_ind - 1) * train_val_split_class + aug_ind, :, :, :] = img
+            x_train[(orig_ind - 1) * train_val_split_class + aug_ind, :, :, 0] = img
             y_train[(orig_ind - 1) * train_val_split_class + aug_ind] = orig_ind - 1
         else:
-            x_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class), :, :, :] = img
+            x_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class), :, :, 0] = img
             y_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class)] = orig_ind - 1
 
 
