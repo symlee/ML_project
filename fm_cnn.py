@@ -20,37 +20,43 @@ num_classes = 1000
 epochs = 12
 train_val_ratio = 0.7 # percentage used for training
 
-num_images_orig = 1000
-num_images_aug = num_images_orig * 20
+num_images_orig = 100
+num_aug = 20
+num_images_aug = num_images_orig * num_aug
 base_path = '../data/2/train_processed_small_aug2/'
 
 img_rows, img_cols = 390, 140
 input_shape = (img_rows, img_cols, 3)
 
-x = np.zeros((num_images_aug, img_rows, img_cols, 3))
-y = np.zeros(num_images_aug)
+train_val_split_dataset = int(np.ceil(train_val_ratio * num_images_aug))
+train_val_split_class = int(train_val_ratio * num_aug)
 
+x_train = np.zeros((train_val_split_dataset, img_rows, img_cols, 3))
+y_train = np.zeros(train_val_split_dataset)
+x_test = np.zeros((num_images_aug - train_val_split_dataset, img_rows, img_cols, 3))
+y_test = np.zeros(num_images_aug - train_val_split_dataset)
 
 for orig_ind in range(1, num_images_orig + 1):
     aug_list = glob.glob(base_path + str(orig_ind) + '_*')
     for aug_ind in range(0, len(aug_list)):
         img = cv2.imread(aug_list[aug_ind], 1)
         #print(img)
-        x[(orig_ind - 1) * 20 + aug_ind, :, :, :] = img
-        y[(orig_ind - 1) * 20 + aug_ind] = orig_ind - 1
-
+        if aug_ind < train_val_split_class:
+            x_train[(orig_ind - 1) * train_val_split_class + aug_ind, :, :, :] = img
+            y_train[(orig_ind - 1) * train_val_split_class + aug_ind] = orig_ind - 1
+        else:
+            x_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class), :, :, :] = img
+            y_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class)] = orig_ind - 1
 
 
 # make train and validation datasets through random permutation (verified with 4 images)
-p = np.random.permutation(len(y))
-x = x[p]
-y = y[p]
+p_train = np.random.permutation(len(y_train))
+p_test = np.random.permutation(len(y_test))
 
-train_val_split = int(np.ceil(train_val_ratio * num_images_aug))
-x_train = x[0:train_val_split]
-y_train = y[0:train_val_split]
-x_test = x[train_val_split:]
-y_test = y[train_val_split:]
+x_train = x_train[p_train]
+y_train = y_train[p_train]
+x_test = x_test[p_test]
+y_test = y_test[p_test]
 
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
@@ -87,10 +93,8 @@ import sys
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
-model.save('v2_fm.h5')
+model.save('v3_fm.h5')
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-
-
