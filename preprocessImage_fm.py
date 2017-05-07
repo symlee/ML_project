@@ -32,10 +32,11 @@ datagen = ImageDataGenerator(
         fill_mode='nearest')
 
 
-base_path = '../data/2/train_processed_small/'
-save_path = '../data/2/train_processed_small/'
+base_path = '../data/2/train_processed_small2/'
+save_path = '../data/2/train_processed_small2/'
 # input image dimensions
-img_rows, img_cols = 300, 110
+img_rows, img_cols = 390, 140
+#img_rows, img_cols = 300, 110
 num_aug = 20            # number of augmented pictures to create (go for 100)
 num_categories = 1000   # number of unique foot prints
 
@@ -58,6 +59,7 @@ for img_path in glob.glob("../data/2/train/*.png"):
 #avgSz = cumuSz / float(counter)
 #print(avgSz)
 '''
+
 
 ind = 1
 #ind = str(ind).zfill(5)

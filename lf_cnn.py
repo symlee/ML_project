@@ -26,7 +26,7 @@ train_val_ratio = 0.5 # percentage used for training
 
 
 # convert to base path and str cat
-num_images_total = 10000  # total number of images (including left and right)
+num_images_total = 1000  # total number of images (including left and right)
 num_images_ind = num_images_total/2
 #base_path = '../data/1/train/processed_large/'
 base_path = '../data/1/train/processed_small/'
