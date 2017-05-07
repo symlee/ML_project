@@ -20,7 +20,7 @@ num_classes = 1000
 epochs = 12
 train_val_ratio = 0.7 # percentage used for training
 
-num_images_orig = 100
+num_images_orig = 100   # TODO - put this back at 1000
 num_aug = 20
 num_images_aug = num_images_orig * num_aug
 base_path = '../data/2/train_processed_small_aug2/'
