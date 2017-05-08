@@ -74,6 +74,7 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # include_top needs to be false to be able to specify input_shape
 # base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+'''
 base_model = keras.applications.vgg16.VGG16(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
 
 x = base_model.output
@@ -83,6 +84,21 @@ x = Dense(1024, activation='relu')(x)
 predictions = Dense(num_classes, activation='softmax')(x)
 
 model = Model(inputs=base_model.input, outputs=predictions)
+'''
+
+model = Sequential()
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=input_shape))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(128, (3, 3), activation='relu'))
+model.add(Conv2D(128, (3, 3), activation='relu'))
+model.add(Dropout(0.25))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(num_classes, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
@@ -95,7 +111,7 @@ import sys
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
-model.save('v4_fm.h5')
+model.save('v5_fm.h5')
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])

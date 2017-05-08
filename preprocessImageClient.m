@@ -22,7 +22,7 @@
 cd ..
 tempdir = pwd;
 cd ML_project
-rootFolder = fullfile(tempdir, 'data/1/valid');
+rootFolder = fullfile(tempdir, 'data/1/test');
 
 % % for the left and right images
 % categories = {'left', 'right'};
@@ -43,7 +43,7 @@ for j = 1:numImages
     im_rotated = preprocessImage(im);
     im_rotated = imresize(im_rotated, [235 115]);  % resize image
     % save_path = strrep(img_path, '/train/', '/train/processed_small/');
-    save_path = strrep(img_path, '/valid/', '/valid_processed_small/');
+    save_path = strrep(img_path, '/test/', '/test_processed/');
     
     imwrite(im_rotated, save_path);
 end

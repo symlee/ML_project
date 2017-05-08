@@ -19,7 +19,7 @@ import numpy as np
 # convert to base path and str cat
 num_images_total = 10000  # total number of images (including left and right)
 num_images_ind = num_images_total/2
-base_path = '../data/1/valid_processed_small/'
+base_path = '../data/1/test_processed_small/'
 model_file = 'v1.h5'
 
 # input image dimensions
