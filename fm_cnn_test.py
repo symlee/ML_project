@@ -17,8 +17,8 @@ import numpy as np
 import glob
 
 # convert to base path and str cat
-base_path = '../data/2/valid_bin/'
-model_file = 'v4_fm.h5'
+base_path = '../data/2/test_processed_small3/'
+model_file = 'v6_fm.h5'
 num_chan = 3
 
 num_images_orig = 10000
@@ -26,7 +26,7 @@ num_aug = 20
 num_images_aug = num_images_orig * num_aug
 
 # input image dimensions
-img_rows, img_cols = 390, 140
+img_rows, img_cols = 224, 224
 input_shape = (img_rows, img_cols, num_chan)
 
 x = np.zeros((num_images_orig, img_rows, img_cols, num_chan))
@@ -34,7 +34,7 @@ x = np.zeros((num_images_orig, img_rows, img_cols, num_chan))
 for ind in range(1, num_images_orig + 1):
     img = cv2.imread(base_path + str(ind) + '.png', 1)
     #print(img)
-    x[ind - 1, :, :, 0] = img
+    x[ind - 1, :, :, :] = img
     #x_av = x_av + x[ind-1]
 
 x = x.astype('float32')
