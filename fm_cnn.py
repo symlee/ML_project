@@ -17,8 +17,8 @@ import glob
 # parameters
 batch_size = 50 # used to be 50
 num_classes = 1000
-epochs = 15
-train_val_ratio = 0.8 # percentage used for training
+epoch = 15
+train_val_ratio = 0.6 # percentage used for training
 
 num_images_orig = 1000   # TODO - put this back at 1000
 num_aug = 20
@@ -26,7 +26,7 @@ num_images_aug = num_images_orig * num_aug
 num_chan = 3
 base_path = '../data/2/train_processed_small_aug3/'
 
-img_rows, img_cols = 390, 140
+img_rows, img_cols = 224, 224
 input_shape = (img_rows, img_cols, num_chan)
 
 train_val_split_dataset = int(np.ceil(train_val_ratio * num_images_aug))
@@ -73,7 +73,7 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # include_top needs to be false to be able to specify input_shape
-base_model = keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None)
+base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights='imagenet', input_tensor=None)
 # base_model = keras.applications.vgg16.VGG16(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
 
 x = base_model.output
@@ -109,7 +109,7 @@ model.summary()
 #sys.exit(1)
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
-model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
+model.fit(x_train, y_train, batch_size=batch_size, epochs=6, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
 model.save('v6_fm.h5')
 
 score = model.evaluate(x_test, y_test, verbose=0)
