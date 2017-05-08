@@ -18,9 +18,9 @@ import glob
 batch_size = 50
 num_classes = 1000
 epochs = 12
-train_val_ratio = 0.7 # percentage used for training
+train_val_ratio = 0.8 # percentage used for training
 
-num_images_orig = 5   # TODO - put this back at 1000
+num_images_orig = 1000   # TODO - put this back at 1000
 num_aug = 20
 num_images_aug = num_images_orig * num_aug
 num_chan = 1
@@ -73,7 +73,8 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # include_top needs to be false to be able to specify input_shape
-base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+# base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+base_model = keras.applications.vgg16.VGG16(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
 
 x = base_model.output
 x = GlobalAveragePooling2D()(x)
@@ -94,7 +95,7 @@ import sys
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
-model.save('v3_fm.h5')
+model.save('v4_fm.h5')
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
