@@ -25,7 +25,7 @@
 cd ..
 tempdir = pwd;
 cd ML_project
-rootFolder = fullfile(tempdir, 'data/2/train');
+rootFolder = fullfile(tempdir, 'data/2/test');
 
 % for validation data
 imds = imageDatastore(rootFolder, 'LabelSource', 'foldernames');
@@ -44,13 +44,13 @@ for j = 1:numImages
     end
     img_path = imds.Files{j};
     im = imread(img_path);
-%     denoisedImage = wiener2(im, [filter_row, filter_col]);
-%     denoisedImage(denoisedImage > threshold) = 255;
-%     denoisedImage(denoisedImage <= threshold) = 0;
-    denoisedImage = im;
+    denoisedImage = wiener2(im, [filter_row, filter_col]);
+    denoisedImage(denoisedImage > threshold) = 255;
+    denoisedImage(denoisedImage <= threshold) = 0;
+%    denoisedImage = im;
     denoisedImage = imresize(denoisedImage, [224 224]);
     %save_path = strrep(img_path, '/train/', '/train_bin/');
-    save_path = strrep(img_path, '/train/', '/train_processed_small3/');
+    save_path = strrep(img_path, '/test/', '/test_processed_small3/');
     
     imwrite(denoisedImage, save_path);
 end
