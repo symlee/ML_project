@@ -32,12 +32,13 @@ datagen = ImageDataGenerator(
         fill_mode='nearest')
 
 
-base_path = '../data/2/valid_processed_small2/'
+base_path = '../data/2/train_processed_small3/'
 # input image dimensions
-img_rows, img_cols = 390, 140
+#img_rows, img_cols = 390, 140
+img_rows, img_cols = 224, 224
 #img_rows, img_cols = 300, 110
 num_aug = 20            # number of augmented pictures to create (go for 100)
-num_categories = 10000   # number of unique foot prints
+num_categories = 1000   # number of unique foot prints
 
 '''
 # for resizing images and determining average image dimensions
@@ -69,7 +70,8 @@ ind = 1
 for ind in xrange(1, num_categories + 1):
 #for ind in xrange(1, 501):
     print('ind is: ' + str(ind))
-    img = cv2.imread(base_path + str(ind) + '.png', 0)
+    #img = cv2.imread(base_path + str(ind) + '.png', 0)
+    img = cv2.imread(base_path + str(ind).zfill(5) + '.png', 0)
     x = np.reshape(img, (1, img_rows, img_cols, 1))  # samples, cols, rows, channels
     i = 0
     for batch in datagen.flow(x, batch_size=1, save_to_dir='preview', save_prefix=str(ind), save_format='png'):

@@ -23,8 +23,8 @@ train_val_ratio = 0.8 # percentage used for training
 num_images_orig = 1000   # TODO - put this back at 1000
 num_aug = 20
 num_images_aug = num_images_orig * num_aug
-num_chan = 1
-base_path = '../data/2/train_processed_small_aug2/'
+num_chan = 3
+base_path = '../data/2/train_processed_small_aug3/'
 
 img_rows, img_cols = 390, 140
 input_shape = (img_rows, img_cols, num_chan)
@@ -43,10 +43,10 @@ for orig_ind in range(1, num_images_orig + 1):
         img = cv2.imread(aug_list[aug_ind], 0)
         #print(img)
         if aug_ind < train_val_split_class:
-            x_train[(orig_ind - 1) * train_val_split_class + aug_ind, :, :, 0] = img
+            x_train[(orig_ind - 1) * train_val_split_class + aug_ind, :, :, 1] = img
             y_train[(orig_ind - 1) * train_val_split_class + aug_ind] = orig_ind - 1
         else:
-            x_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class), :, :, 0] = img
+            x_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class), :, :, 1] = img
             y_test[(orig_ind - 1) * (num_aug - train_val_split_class) + (aug_ind - train_val_split_class)] = orig_ind - 1
 
 
@@ -73,13 +73,12 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # include_top needs to be false to be able to specify input_shape
-base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+base_model = keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None)
 # base_model = keras.applications.vgg16.VGG16(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
 
 x = base_model.output
-x = Dense(1024, activation='relu')(x)
 x = GlobalAveragePooling2D()(x)
-x = Dense(2048, activation='relu')(x)
+x = Dense(1024, activation='relu')(x)
 predictions = Dense(num_classes, activation='softmax')(x)
 
 model = Model(inputs=base_model.input, outputs=predictions)
@@ -111,7 +110,7 @@ model.summary()
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=12, verbose=1, validation_data=(x_test, y_test), callbacks=[early_stopping])
-model.save('v5_fm.h5')
+model.save('v6_fm.h5')
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
