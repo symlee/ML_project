@@ -15,9 +15,9 @@ import numpy as np
 import glob
 
 # parameters
-batch_size = 50
+batch_size = 50 # used to be 50
 num_classes = 1000
-epochs = 12
+epochs = 15
 train_val_ratio = 0.8 # percentage used for training
 
 num_images_orig = 1000   # TODO - put this back at 1000
@@ -73,19 +73,18 @@ y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
 # include_top needs to be false to be able to specify input_shape
-# base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
-'''
-base_model = keras.applications.vgg16.VGG16(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+base_model = keras.applications.inception_v3.InceptionV3(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
+# base_model = keras.applications.vgg16.VGG16(include_top=False, weights=None, input_tensor=None, input_shape=input_shape)
 
 x = base_model.output
-x = GlobalAveragePooling2D()(x)
 x = Dense(1024, activation='relu')(x)
-# and a logistic layer -- let's say we have 200 classes
+x = GlobalAveragePooling2D()(x)
+x = Dense(2048, activation='relu')(x)
 predictions = Dense(num_classes, activation='softmax')(x)
 
 model = Model(inputs=base_model.input, outputs=predictions)
-'''
 
+'''
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
@@ -96,9 +95,10 @@ model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(Conv2D(128, (3, 3), activation='relu'))
 model.add(Dropout(0.25))
 model.add(Flatten())
-model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
+'''
 
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
@@ -106,7 +106,7 @@ model.compile(loss=keras.losses.categorical_crossentropy,
 
 
 model.summary()
-import sys
+#import sys
 #sys.exit(1)
 
 early_stopping = EarlyStopping(monitor='val_loss', patience=2)
