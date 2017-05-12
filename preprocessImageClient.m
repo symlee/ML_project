@@ -22,14 +22,14 @@
 cd ..
 tempdir = pwd;
 cd ML_project
-rootFolder = fullfile(tempdir, 'data/1/test');
+rootFolder = fullfile(tempdir, 'data/1/train');
 
 % % for the left and right images
-% categories = {'left', 'right'};
-% imds = imageDatastore(fullfile(rootFolder, categories), 'LabelSource', 'foldernames');
+categories = {'left', 'right'};
+imds = imageDatastore(fullfile(rootFolder, categories), 'LabelSource', 'foldernames');
 
 % for validation data
-imds = imageDatastore(rootFolder, 'LabelSource', 'foldernames');
+% imds = imageDatastore(rootFolder, 'LabelSource', 'foldernames');
 
 [numImages, ~] = size(imds.Files);
 % numImages = 200;
@@ -39,6 +39,7 @@ for j = 1:numImages
         j
     end
     img_path = imds.Files{j};
+    img_path
     im = imread(img_path);
     im_rotated = preprocessImage(im);
     im_rotated = imresize(im_rotated, [235 115]);  % resize image
