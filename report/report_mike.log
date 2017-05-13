@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.8)  12 MAY 2017 18:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.8)  13 MAY 2017 00:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -551,25 +551,70 @@ Package microtype Info: Loading configuration file microtype.cfg.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2013/05/23 v2.5a microtype main configuration file (RS)
 ))
-(./report_mike.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 95.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count107
+))
+\Gin@req@height=\dimen129
+\Gin@req@width=\dimen130
+)
+(/usr/share/texlive/texmf-dist/tex/latex/blindtext/blindtext.sty
+Package: blindtext 2012/01/06 V2.0 blindtext-Package
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/xspace.sty
+Package: xspace 2014/10/28 v1.13 Space after command names (DPC,MH)
+)
+\c@blindtext=\count108
+\c@Blindtext=\count109
+\c@blind@countparstart=\count110
+\blind@countxx=\count111
+\blindtext@numBlindtext=\count112
+\blind@countyy=\count113
+\c@blindlist=\count114
+\c@blindlistlevel=\count115
+\c@blindlist@level=\count116
+\blind@listitem=\count117
+\c@blind@listcount=\count118
+\c@blind@levelcount=\count119
+\blind@mathformula=\count120
+\blind@Mathformula=\count121
+\c@blind@randomcount=\count122
+\c@blind@randommax=\count123
+\c@blind@pangramcount=\count124
+\c@blind@pangrammax=\count125
+) (./report_mike.aux)
 \openout1 = `report_mike.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 44.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 47.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 *geometry* driver: auto-detecting
@@ -639,24 +684,24 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box26
-Package hyperref Info: Link coloring OFF on input line 44.
+Package hyperref Info: Link coloring OFF on input line 47.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count107
+\c@section@level=\count126
 )
-LaTeX Info: Redefining \ref on input line 44.
-LaTeX Info: Redefining \pageref on input line 44.
-LaTeX Info: Redefining \nameref on input line 44.
+LaTeX Info: Redefining \ref on input line 47.
+LaTeX Info: Redefining \pageref on input line 47.
+LaTeX Info: Redefining \nameref on input line 47.
 
 (./report_mike.out) (./report_mike.out)
 \@outlinefile=\write3
 \openout3 = `report_mike.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 44.
+LaTeX Info: Redefining \microtypecontext on input line 47.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -670,14 +715,42 @@ Package microtype Info: No adjustment of character kerning.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count127
+\scratchdimen=\dimen131
+\scratchbox=\box27
+\nofMPsegments=\count128
+\nofMParguments=\count129
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count130
+\MPscratchDim=\dimen132
+\MPnumerator=\count131
+\makeMPintoPDFobject=\count132
+\everyMPtoPDFconversion=\toks21
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 48.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 51.
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 48.
+LaTeX Font Info:    Try loading font information for U+msa on input line 51.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -685,7 +758,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 48.
+LaTeX Font Info:    Try loading font information for U+msb on input line 51.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -694,8 +767,8 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 48.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 48.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 51.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 51.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
@@ -705,61 +778,107 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 49.
- [1
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 52.
+
+<./report_images/preprocessing_1.png, id=56, 1142.2675pt x 600.2425pt>
+File: ./report_images/preprocessing_1.png Graphic file (type png)
+
+<use ./report_images/preprocessing_1.png>
+Package pdftex.def Info: ./report_images/preprocessing_1.png used on input line
+ 64.
+(pdftex.def)             Requested size: 397.48499pt x 208.86987pt.
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 136.
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[1
 
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<./report_images/optimizers.png, id=66, 1309.89375pt x 355.3275pt>
+File: ./report_images/optimizers.png Graphic file (type png)
+
+<use ./report_images/optimizers.png>
+Package pdftex.def Info: ./report_images/optimizers.png used on input line 80.
+(pdftex.def)             Requested size: 397.48499pt x 107.8244pt.
+ [2 <./report_images/preprocessing_1.png> <./report_images/optimizers.png>]
+<./report_images/2_preprocessing.png, id=73, 888.31876pt x 584.1825pt>
+File: ./report_images/2_preprocessing.png Graphic file (type png)
+
+<use ./report_images/2_preprocessing.png>
+Package pdftex.def Info: ./report_images/2_preprocessing.png used on input line
+ 105.
+(pdftex.def)             Requested size: 198.7425pt x 130.69553pt.
+ [3 <./report_images/2_preprocessing.png>]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 141.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 136.
- [3]
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 183.
- [4] [5] [6]
-LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <10> not available
-(Font)              Font shape `T1/ptm/b/it' tried instead on input line 446.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 141.
 
-[7]
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 463.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 465.
- [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 465.
+<./report_images/eigenfeet.png, id=80, 1245.65375pt x 491.8375pt>
+File: ./report_images/eigenfeet.png Graphic file (type png)
+
+<use ./report_images/eigenfeet.png>
+Package pdftex.def Info: ./report_images/eigenfeet.png used on input line 158.
+(pdftex.def)             Requested size: 397.48499pt x 156.94092pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<./report_images/full_cluster.png, id=83, 1060.96375pt x 444.66125pt>
+File: ./report_images/full_cluster.png Graphic file (type png)
+
+<use ./report_images/full_cluster.png>
+Package pdftex.def Info: ./report_images/full_cluster.png used on input line 16
+8.
+(pdftex.def)             Requested size: 397.48499pt x 166.59149pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<./report_images/partial_cluster.png, id=84, 1100.11pt x 430.60875pt>
+File: ./report_images/partial_cluster.png Graphic file (type png)
+
+<use ./report_images/partial_cluster.png>
+Package pdftex.def Info: ./report_images/partial_cluster.png used on input line
+ 174.
+(pdftex.def)             Requested size: 397.48499pt x 155.58409pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 181.
+[4] [5 <./report_images/eigenfeet.png> <./report_images/full_cluster.png> <./re
+port_images/partial_cluster.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 181.
  (./report_mike.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 465.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 465.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 181.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 181.
 Package rerunfilecheck Info: File `report_mike.out' has not changed.
-(rerunfilecheck)             Checksum: 537F69C0CB4D4685F6A3A7D88D036399;1929.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 465.
+(rerunfilecheck)             Checksum: F67FD03E3BF57BB80CE8F18D85254CA1;906.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 181.
  ) 
 Here is how much of TeX's memory you used:
- 7551 strings out of 494953
- 113368 string characters out of 6180977
- 223496 words of memory out of 5000000
- 10550 multiletter control sequences out of 15000+600000
- 53115 words of font info for 157 fonts, out of 8000000 for 9000
+ 8434 strings out of 494953
+ 127077 string characters out of 6180977
+ 244001 words of memory out of 5000000
+ 11473 multiletter control sequences out of 15000+600000
+ 27716 words of font info for 100 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 31i,8n,35p,1123b,327s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 31i,8n,35p,1228b,332s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/msl/.texmf
 -var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report_mike.pdf (8 pages, 130512 bytes).
+type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
+es/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+Output written on report_mike.pdf (5 pages, 2774235 bytes).
 PDF statistics:
- 293 PDF objects out of 1000 (max. 8388607)
- 214 compressed objects within 3 object streams
- 45 named destinations out of 1000 (max. 500000)
- 26345 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 142 PDF objects out of 1000 (max. 8388607)
+ 109 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
+ 14471 words of extra memory for PDF output out of 17280 (max. 10000000)
 
